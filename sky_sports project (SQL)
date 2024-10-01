@@ -1,0 +1,188 @@
+#1 Quarey : Import both the .CSV files in Dbeaver under the database name Sky_Sports
+show databases;
+create database Sky_Sports;
+use Sky_Sports;
+show tables;
+select distinct (team) from goal;
+select distinct (team) from football;
+
+#2 Quarey : Write an sql query to show all the UNIQUE team names 
+select team from  football ;
+select * from goal join football on football.team = goal.team concat(team);
+
+#3 Quarey : Write an SQL query to show name of team which has rank 1 from group 7 
+select * from goal where `rank`  = 1 and `group`=7;
+
+#4 Quarey :Write an sql query to show count of all teams 
+select count(team)  from football;
+
+#5 Quarey :  Write an SQL query to show matches_played by each team
+select team , games as matches_Played from football ;
+
+#6 Quarey : Write an SQL query to show team, percent of wins with respect to 
+#matches_played by each team and name the resulting column as wins_percent
+select team , games as matches_Played , gk_wins  as wins_percent 
+from football  ;
+
+#7 Quarey : Write an SQL query to show which team has maximum goals_scored and their count
+select max(goals) from football ;
+select team , goals	from football where goals=(select max(goals) from football);
+
+#8 Quarey : Write an SQL query to show percent of draws with respect to 
+#matches_played round of to 2 digits by each team
+select team, round(100.0*(draws/matches_played), 2) 
+from goal g ;
+
+#9 quarey : Write an SQL query to show which team has minimum goals_scored and their count
+select min(goals_scored) from goal g ;  
+select team , goals_scored  from goal g  where goals_scored = (select min(goals_scored) from goal g);
+
+#10 quarey : Write an SQL query to show percent of losses with respect to matches_played 
+#by each team in ascending order by losses and name the resulting column as losses_percent
+select team , matches_played , round(100*(losses/matches_played),2) as losses_percent from goal g order by losses asc  ;
+
+#11 quarey :  Write a SQL query to show the average goal_difference
+select avg(goal_difference) from goal g ;
+
+#12 quarey : Write a SQL query to show name of the team where points are 0
+select team , points  from goal g where points = 0;
+
+#13 quarey : Write a SQL query to show all data where expected_goal_scored is less 
+#than exp_goal_conceded
+select * from goal g where expected_goal_scored < exp_goal_conceded  ;
+
+# 14 quarey : Write an SQL query to show data where exp_goal_difference is in between -0.5 and 0.5
+select * from goal g where exp_goal_difference between -0.5 and 0.5 ;
+
+# 15 quarey : Write an SQL query to show all data in ascending order by exp_goal_difference_per_90
+select * from goal g order by exp_goal_difference_per_90 asc ;
+
+# 16 quarey : Write an SQL query to show team which has maximum number of players_used
+select max(players_used) from football f ; 
+select team , players_used  from football f where players_used =(select max(players_used) from football f) ;
+
+# 17 quarey : Write an SQL query to show each team name and avg_age in ascending order by avg_age
+select team , avg_age  from football f  order by avg_age asc;
+
+# 18 quarey : Write an sql query to show average possession of teams 
+select team ,avg(possession)  from football f group by team ;
+
+#19 quarey : Write a SQL query to show team which has played atleast 5 games
+select team , matches_played  from goal g where matches_played = 5 ;
+
+# 20 quarey : Write an SQL query to show all data for which minutes is greater than 600
+select team , minutes  from football f where minutes >600 ;
+
+# 21 quarey: Write an SQL query to show team, goals, assists in ascending order by goals
+select team , goals_scored , goals_against  from goal g order by goals_scored asc;
+
+#22 quarey : Write an SQL query to show team, pens_made, pens_att in descending order by pens_made
+select team , pens_made , pens_att  from football f order by pens_made desc ;
+
+# 23 quarey : Write an SQL query to show team, cards_yellow, cards_red where cards_red is equal to 1 in ascending order by cards_yellow 
+select team , cards_yellow ,cards_red  from football f where cards_red = 1 order by cards_yellow asc;
+
+# 24 quarey : Write an SQL query to show team, goals_per90, assists_per90, goals_assists_per90 in descending order by goals_assists_per90 
+select team, goals_per90, assists_per90, goals_assists_per90 from football f order by goals_assists_per90 desc;
+
+# 25 quarey : Write an SQL query to show team, goals_pens_per90, goals_assists_pens_per90 in ascending order by goals_assists_pens_per90
+select team, goals_pens_per90, goals_assists_pens_per90 from football f order by goals_assists_pens_per90 asc ;
+
+# 26 quarey : Write an SQL query to show team, shots, shots_on_target, shots_on_target_pct where shots_on_target_pct is less than 30 in ascending order by shots_on_target_pct 
+select team, shots, shots_on_target, shots_on_target_pct from football f where shots_on_target_pct < 30 order by shots_on_target_pct asc;
+
+# 27 quarey : Write an SQL query to show team, shots_per90, shots_on_target_per90 for team Belgium
+select team , shots_per90 ,shots_on_target_per90 from football f where team = "  belgium" ;
+
+# 28 quarey :  Write an SQL query to show team, goals_per_shot, goals_per_shot_on_target
+#, average_shot_distance in descending order by average_shot_distance 
+SELECT team, goals_per_shot, goals_per_shot_on_target ,average_shot_distance FROM football f order by average_shot_distance desc ;
+
+# 29 quarey : Write an SQL query to show team, errors, touches for which errors is 0 and touches is less than 1500 
+select team, errors, touches from football f where errors=0 and touches < 1500;
+
+# 30 quarey : Write an SQL query to show team, fouls which has maximum number of fouls
+select team, fouls from football f where fouls = (select max(fouls) from football f2 ) ; 
+
+# 31 quarey : Write an SQL query to show team, offisdes which has offsides less than 10 or greater than 20
+SELECT team , offsides FROM football where offsides <10 or offsides >20 ;
+
+# 32 quarey : Write an SQL query to show team, aerials_won, aerials_lost, aerials_won_pct in descending order by aerials_won_pct 
+select team , aerials_won ,aerials_lost ,aerials_won_pct  from football f order by aerials_won_pct desc  ;
+
+#33 quarey : WRITE a sql query to show number of teams each group has
+select count(team)  , `group`  from  goal g group by `group` ;
+
+#34 quarey : Write a SQL query to show team names group 6 has
+select team, `group` from goal g where `group`=6;
+
+#35 quarey : Write a SQL query to show Australia belongs to which group
+select team , `group`  from goal g where team = 'australia' ;
+
+#36 quarey : Write a SQL query to show group, average wins by each group
+select `group`, avg(wins) from goal g group by `group`;
+
+#37 quarey : Write a SQL query to show group, maximum expected_goal_scored by 
+#each group in ascending order by expected_goal_scored  
+select `group` , max(expected_goal_scored) as max_exp_goal_scored from goal g  
+group by `group` order by max_exp_goal_scored;
+
+#38 quarey : Write a SQL query to show group, minimum exp_goal_conceded by 
+#each group in descending order by exp_goal_conceded
+select `group`, min(exp_goal_conceded) as min_exp_goal_conceded from goal g 
+group by `group` order by min_exp_goal_conceded desc;
+
+#39 quarey : Write a SQL query to show group, average exp_goal_difference_per_90 for
+# each group in ascending order by exp_goal_difference_per_90
+select `group`, avg(exp_goal_difference_per_90) as avg_exp_goal_diff_per_90 from goal g 
+group by `group` order by avg_exp_goal_diff_per_90;
+
+#40 quarey : WRITE a query to show which team has equal number of goals_scored and goals_against
+select team, goals_scored, goals_against from goal g  where goals_scored = goals_against;
+
+#41 quarey : WRITE a query to show which team has maximum players_used
+select team, players_used from football f 
+where players_used=(select max(players_used) from football f2);
+
+#42 quarey : WRITE a query to show team, players_used, avg_age, games, minutes  
+#where minutes less than 500 and greater than 200
+select team, players_used, avg_age, games, minutes from football f  
+where minutes < 500 and minutes > 200;
+
+#43 quarey : WRITE a query to show all data of group_stage_team_stats in ascending order BY points
+select * from goal g  order by points;
+
+#44 quarey : WRITE a query to show ALL UNIQUE team in ascending order by team
+select distinct(team) from football f  order by team;
+
+#45 quarey : SQL Joins
+#WRITE a query to show average avg_age of each group and arrange it in descending order by avg_age.
+select g.`group`, avg(f.avg_age) as avg_group_age from football f  inner join goal g  
+on f.team=g.team group by g.`group` order by avg_group_age desc ;
+
+#46 quarey : WRITE a query to show sum of fouls for each group and arrange it in ascending order by fouls.
+select g.`group`, sum(f.fouls) as sum_fouls from football f  inner join goal g  
+on f.team=g.team group by g.`group` order by sum_fouls;
+
+#47 quarey : WRITE a query to show total number of games for each group and arrange it in descending order by games.
+select g.`group`, sum(f.games) as sum_games from football f  inner join goal g 
+on f.team=g.team group by g.`group` order by sum_games desc;
+
+#48 quarey :  WRITE a query to show total number of players_used for each group and arrange it in ascending order by players_used.
+select g.`group`, sum(f.players_used) as sum_players_used from football f  inner join goal g
+on f.team=g.team group by g.`group` order by sum_players_used;
+
+#49 quarey : WRITE a query to show total number of offsides for each group and 
+#arrange it in ascending order by offsides.
+select g.`group`, sum(f.offsides) as sum_offsides from  football f  inner join goal g 
+on f.team=g.team group by g.`group` order by sum_offsides;
+
+#50 quarey : WRITE a query to show average passes_pct for each group and arrange it 
+#in descending order by passes_pct.
+select g.`group`, avg(f.passes_pct) as avg_passes_pct from football f  inner join goal g  
+on f.team=g.team group by g.`group` order by avg_passes_pct desc;
+
+#51 quarey :  WRITE a query to show average goals_per90 for each group and arrange it in ascending order by goals_per90.
+select g.`group`, avg(f.goals_per90) as avg_goals_per90 from football f  inner join goal g 
+on f.team=g.team group by g.`group` order by avg_goals_per90;
+
